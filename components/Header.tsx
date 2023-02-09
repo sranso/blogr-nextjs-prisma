@@ -7,9 +7,11 @@ const Header: React.FC = () => {
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
+  const session = null; // { user: { name: "sranso", email: "sranso@gmail.com" } };
+
   let left = (
     <div className="left">
-      <Link href="/">Feed</Link>
+      <Link href="/" className="bold" data-active={isActive("/")}></Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -17,7 +19,7 @@ const Header: React.FC = () => {
 
         a {
           text-decoration: none;
-          color: #000;
+          color: var(--geist-foreground);
           display: inline-block;
         }
 
@@ -33,6 +35,109 @@ const Header: React.FC = () => {
   );
 
   let right = null;
+
+  if (!session) {
+    right = (
+      <div className="right">
+        <Link href="/signin" data-active={isActive("/signin")}>
+          sign up / in
+        </Link>
+        <style jsx>{`
+          a {
+            text-decoration: none;
+            color: var(--geist-foreground);
+            display: inline-block;
+          }
+
+          a + a {
+            margin-left: 1rem;
+          }
+
+          .right {
+            margin-left: auto;
+          }
+
+          .right a {
+            border: 1px solid var(--geist-foreground);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (session) {
+    left = (
+      <div className="left">
+        <Link href="/" className="bold" data-active={isActive("/")}></Link>
+        <Link href="/drafts" data-active={isActive("/drafts")}>
+          My drafts
+        </Link>
+        <style jsx>{`
+          .bold {
+            font-weight: bold;
+          }
+
+          a {
+            text-decoration: none;
+            color: var(--geist-foreground);
+            display: inline-block;
+          }
+
+          .left a[data-active="true"] {
+            color: gray;
+          }
+
+          a + a {
+            margin-left: 1rem;
+          }
+        `}</style>
+      </div>
+    );
+    right = (
+      <div className="right">
+        <p>
+          {session.user.name} ({session.user.email})
+        </p>
+        <button onClick={() => console.log("new post")}>New post</button>
+        <button onClick={() => console.log("sign out")}>
+          <a>Log out</a>
+        </button>
+        <style jsx>{`
+          a {
+            text-decoration: none;
+            color: var(--geist-foreground);
+            display: inline-block;
+          }
+
+          p {
+            display: inline-block;
+            font-size: 13px;
+            padding-right: 1rem;
+          }
+
+          a + a {
+            margin-left: 1rem;
+          }
+
+          .right {
+            margin-left: auto;
+          }
+
+          .right a {
+            border: 1px solid var(--geist-foreground);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+          }
+
+          button {
+            border: none;
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <nav>
