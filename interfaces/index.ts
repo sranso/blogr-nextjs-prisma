@@ -9,7 +9,3 @@ export type User = {
 export type ResponseError = {
   message: string;
 };
-
-export type Session = {
-  email: string;
-}

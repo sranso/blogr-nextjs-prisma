@@ -12,8 +12,6 @@ use this? https://www.prisma.io/docs/concepts/components/prisma-client/advanced-
 
 ## Add cookie for signed in users
 
-- When the visitor signs out, destroy the cookie.
-
 Every time that visitor wants to do something that cookie should be part of the request and you can use that username to look up the account, etc etc
 
 ## Add SWR

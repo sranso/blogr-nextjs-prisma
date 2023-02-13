@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import Cookies from "js-cookie";
 import type { User, ResponseError } from "../interfaces";
 import Link from "next/link";
 
@@ -16,18 +17,12 @@ const SignIn: React.FC = () => {
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
       console.log("user signed in", data);
-      document.cookie = `session:${email}`;
+      Cookies.set("session", email);
     }
     if (res.status === 404 && isResponseError(data)) {
       console.error("error", data);
       setError(data.message);
     }
-    /**
-     * attempt to find user, /api/users/[email]
-     *  if 200 user found, sign in, store email in cookie
-     *  if email bad format, display error message
-     *  else say no user found, sign up instead?
-     */
   };
 
   const onFieldChange = (event: ChangeEvent<HTMLInputElement>) => {

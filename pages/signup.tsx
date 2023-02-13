@@ -1,13 +1,18 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import type { User, ResponseError } from "../interfaces";
+import Cookies from "js-cookie";
 import Link from "next/link";
+import type { User, ResponseError } from "../interfaces";
+
+const isResponseError = (data: User | ResponseError): data is ResponseError => {
+  return (data as ResponseError).message !== undefined;
+};
 
 const SignUp: React.FC = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
   const signUpUser = async () => {
     const res = await fetch("/api/users/create", {
@@ -20,9 +25,9 @@ const SignUp: React.FC = () => {
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
       console.log("user created", data);
-      document.cookie = `session:${user.email}`;
+      Cookies.set("session", user.email);
     }
-    if (res.status === 409 && typeof data?.message === 'string') {
+    if (res.status === 409 && isResponseError(data)) {
       console.error("error", data);
       setError(data.message);
     }
@@ -51,7 +56,7 @@ const SignUp: React.FC = () => {
         </label>
         <input type="submit" value="Submit" />
       </form>
-      {error ? <p>{error}</p> : null}
+      {error.length ? <p>{error}</p> : null}
       <Link href="/signin">Sign in instead</Link>
     </div>
   );

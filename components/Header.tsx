@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import type { Session } from "../interfaces";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const [session, setSession] = useState({ email: "" });
+
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
-  const [session, setSession] = useState({ email: "" });
-
   useEffect(() => {
-    const index = document.cookie.indexOf('session');
-    if (!index) return null;
-    setSession({
-      email: document.cookie.slice(index).split(':')[1]
-    });
+    const getCookie = async () => {
+      const cookie = await Cookies.get("session");
+      if (cookie) {
+        setSession({
+          email: cookie
+        });
+      }
+    }
+    getCookie();
   }, [session.email])
 
   let left = (
@@ -108,7 +112,7 @@ const Header: React.FC = () => {
           ({session.email})
         </p>
         <button onClick={() => console.log("new post")}>New post</button>
-        <button onClick={() => console.log("sign out")}>
+        <button onClick={() => Cookies.remove("session")}>
           <a>Log out</a>
         </button>
         <style jsx>{`
