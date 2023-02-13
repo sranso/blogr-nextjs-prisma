@@ -6,17 +6,15 @@ https://vercel.com/guides/nextjs-prisma-postgres
 
 # Todos
 
-## Get Typescript to run in VSCode / on npm run dev
+## Email validation upon sign up
+
+use this? https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/prisma-validator
 
 ## Add cookie for signed in users
 
-When the visitor proves to you that they control an account (by simply knowing the username) I would store that username in a cookie.
+- When the visitor signs out, destroy the cookie.
 
 Every time that visitor wants to do something that cookie should be part of the request and you can use that username to look up the account, etc etc
-
-Maybe call the cookie “session” or something else terribly clever.
-
-When the visitor signs out, destroy the cookie.
 
 ## Add SWR
 

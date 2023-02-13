@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { Session } from "../interfaces";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
-  const session = null; // { user: { name: "sranso", email: "sranso@gmail.com" } };
+  const [session, setSession] = useState({ email: "" });
+
+  useEffect(() => {
+    const index = document.cookie.indexOf('session');
+    if (!index) return null;
+    setSession({
+      email: document.cookie.slice(index).split(':')[1]
+    });
+  }, [session.email])
 
   let left = (
     <div className="left">
@@ -36,7 +45,7 @@ const Header: React.FC = () => {
 
   let right = null;
 
-  if (!session) {
+  if (!session.email.length) {
     right = (
       <div className="right">
         <Link href="/signin" data-active={isActive("/signin")}>
@@ -65,9 +74,7 @@ const Header: React.FC = () => {
         `}</style>
       </div>
     );
-  }
-
-  if (session) {
+  } else {
     left = (
       <div className="left">
         <Link href="/" className="bold" data-active={isActive("/")}></Link>
@@ -98,7 +105,7 @@ const Header: React.FC = () => {
     right = (
       <div className="right">
         <p>
-          {session.user.name} ({session.user.email})
+          ({session.email})
         </p>
         <button onClick={() => console.log("new post")}>New post</button>
         <button onClick={() => console.log("sign out")}>
