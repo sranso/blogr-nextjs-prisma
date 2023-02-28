@@ -24,7 +24,7 @@ const Header: React.FC = () => {
 
   let left = (
     <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}></Link>
+      <Link href="/" className="bold" data-active={isActive("/")}>Home</Link>
       <style jsx>{`
         .bold {
           font-weight: bold;

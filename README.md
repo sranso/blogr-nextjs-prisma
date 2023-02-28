@@ -17,13 +17,20 @@ https://vercel.com/guides/nextjs-prisma-postgres
 
 # Todos
 
+## Add cookie for signed in users
+
+- on success, route them home and reload header
+- make failures red
+- Every time that visitor wants to do something, that cookie should be part of the request and you can use that username to look up the account, etc etc
+
 ## Email validation upon sign up
 
 use this? https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/prisma-validator
 
-## Add cookie for signed in users
+## Decide what this is ;)
 
-Every time that visitor wants to do something that cookie should be part of the request and you can use that username to look up the account, etc etc
+A game? Place for people to add and share fav quotes?
+Poetry? Missed connections? Creative prompts made from fav quotes / poetry / any kind of post or submission from a user?
 
 ## Add SWR
 

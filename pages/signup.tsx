@@ -43,7 +43,7 @@ const SignUp: React.FC = () => {
     signUpUser();
   };
   return (
-    <div>
+    <>
       <form onSubmit={onSubmit}>
         <p>Sign up</p>
         <label>
@@ -58,7 +58,7 @@ const SignUp: React.FC = () => {
       </form>
       {error.length ? <p>{error}</p> : null}
       <Link href="/signin">Sign in instead</Link>
-    </div>
+    </>
   );
 };
 

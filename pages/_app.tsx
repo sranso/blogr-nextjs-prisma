@@ -1,8 +1,11 @@
 import { AppProps } from "next/app";
+import Layout from "../components/Layout";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Component {...pageProps} />
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 };
 
