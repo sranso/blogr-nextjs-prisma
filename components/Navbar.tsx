@@ -1,26 +1,19 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
-const Header: React.FC = () => {
+export type NavbarProps = {
+  session: {
+    email: string;
+  };
+};
+
+const Navbar: React.FC<NavbarProps> = ({ session }) => {
   const router = useRouter();
-  const [session, setSession] = useState({ email: "" });
 
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
-
-  useEffect(() => {
-    const getCookie = async () => {
-      const cookie = await Cookies.get("session");
-      if (cookie) {
-        setSession({
-          email: cookie
-        });
-      }
-    }
-    getCookie();
-  }, []);
 
   const logOut = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -171,4 +164,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default Navbar;
