@@ -14,7 +14,13 @@ const SignIn: React.FC = () => {
   const router = useRouter();
 
   const signInUser = async () => {
-    const res = await fetch(`/api/users/${email}`);
+    const res = await fetch(`/api/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+      })
+    });
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
       console.log("user signed in", data);
