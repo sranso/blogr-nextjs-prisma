@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import type { User, ResponseError } from "../interfaces";
 import Link from "next/link";
@@ -7,10 +8,10 @@ const isResponseError = (data: User | ResponseError): data is ResponseError => {
   return (data as ResponseError).message !== undefined;
 };
 
-const SignIn: React.FC<{}> = () => {
+const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
 
   const signInUser = async () => {
     const res = await fetch(`/api/users/${email}`);
@@ -18,6 +19,7 @@ const SignIn: React.FC<{}> = () => {
     if (res.status === 200) {
       console.log("user signed in", data);
       Cookies.set("session", email);
+      router.push("/");
     }
     if (res.status === 404 && isResponseError(data)) {
       console.error("error", data);
@@ -51,8 +53,13 @@ const SignIn: React.FC<{}> = () => {
       </label>
       <input type="submit" value="Submit" />
     </form>
-      {error.length ? <p>{error}</p> : null}
-      <Link href="/signup">Sign up instead</Link>
+    {error.length ? <p className="error">{error}</p> : null}
+    <Link href="/signup">Sign up instead</Link>
+    <style jsx>{`
+      .error {
+        color: red;
+      }
+    `}</style>
     </>
   );
 };

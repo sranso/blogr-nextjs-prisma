@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       }
     }
     getCookie();
-  }, [session.email])
+  }, [])
 
   let left = (
     <div className="left">

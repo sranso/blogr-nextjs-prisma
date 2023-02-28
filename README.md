@@ -20,7 +20,7 @@ https://vercel.com/guides/nextjs-prisma-postgres
 ## Add cookie for signed in users
 
 - on success, route them home and reload header
-- make failures red
+- use /api/login instead of /api/users/email https://nextjs.org/docs/api-reference/next/router#usage-2
 - Every time that visitor wants to do something, that cookie should be part of the request and you can use that username to look up the account, etc etc
 
 ## Email validation upon sign up

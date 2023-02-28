@@ -56,8 +56,13 @@ const SignUp: React.FC = () => {
         </label>
         <input type="submit" value="Submit" />
       </form>
-      {error.length ? <p>{error}</p> : null}
+      {error.length ? <p className="error">{error}</p> : null}
       <Link href="/signin">Sign in instead</Link>
+      <style jsx>{`
+        .error {
+          color: red;
+        }
+      `}</style>
     </>
   );
 };
