@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import type { User, ResponseError } from "../interfaces";
-import Link from "next/link";
 
 const isResponseError = (data: User | ResponseError): data is ResponseError => {
   return (data as ResponseError).message !== undefined;

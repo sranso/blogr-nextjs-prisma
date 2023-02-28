@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
@@ -20,7 +20,13 @@ const Header: React.FC = () => {
       }
     }
     getCookie();
-  }, [])
+  }, []);
+
+  const logOut = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    Cookies.remove("session");
+    router.push("/");
+  };
 
   let left = (
     <div className="left">
@@ -112,8 +118,8 @@ const Header: React.FC = () => {
           ({session.email})
         </p>
         <button onClick={() => console.log("new post")}>New post</button>
-        <button onClick={() => Cookies.remove("session")}>
-          <a>Log out</a>
+        <button onClick={logOut}>
+          Log out
         </button>
         <style jsx>{`
           a {

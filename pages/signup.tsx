@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import type { User, ResponseError } from "../interfaces";
 
@@ -13,6 +14,7 @@ const SignUp: React.FC = () => {
     email: "",
   });
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const signUpUser = async () => {
     const res = await fetch("/api/users/create", {
@@ -26,6 +28,7 @@ const SignUp: React.FC = () => {
     if (res.status === 200) {
       console.log("user created", data);
       Cookies.set("session", user.email);
+      router.push("/");
     }
     if (res.status === 409 && isResponseError(data)) {
       console.error("error", data);
