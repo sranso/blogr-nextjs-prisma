@@ -4,6 +4,17 @@ This is the starter project for the fullstack tutorial with Next.js and Prisma. 
 
 https://vercel.com/guides/nextjs-prisma-postgres
 
+## To run
+
+`npm run dev`
+
+## Tools and services
+
+- Database is postgres, hosted on supabase.com
+- prisma is ORM
+- nextjs is framework
+- typescript is language
+
 # Todos
 
 ## Email validation upon sign up

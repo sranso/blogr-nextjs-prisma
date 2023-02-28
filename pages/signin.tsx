@@ -7,7 +7,7 @@ const isResponseError = (data: User | ResponseError): data is ResponseError => {
   return (data as ResponseError).message !== undefined;
 };
 
-const SignIn: React.FC = () => {
+const SignIn: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -38,19 +38,19 @@ const SignIn: React.FC = () => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <p>Sign in</p>
-        <label>
-          Email:
-          <input
-            autoFocus
-            type="text"
-            id="email"
-            name="email"
-            onChange={onFieldChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <p>Sign in</p>
+      <label>
+        Email:
+        <input
+          autoFocus
+          type="text"
+          id="email"
+          name="email"
+          onChange={onFieldChange}
+        />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
       {error.length ? <p>{error}</p> : null}
       <Link href="/signup">Sign up instead</Link>
     </div>
