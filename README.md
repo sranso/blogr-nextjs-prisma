@@ -19,7 +19,6 @@ https://vercel.com/guides/nextjs-prisma-postgres
 
 ## Add cookie for signed in users
 
-- reload header on sign in/up/out
 - Every time that visitor wants to do something, that cookie should be part of the request and you can use that username to look up the account, etc etc
 
 ## Email validation upon sign up

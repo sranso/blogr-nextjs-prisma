@@ -12,14 +12,14 @@ const Layout: React.FC<Props> = (props) => {
   useEffect(() => {
     const getCookie = async () => {
       const cookie = await Cookies.get("session");
-      if (cookie) {
+      if (cookie && !session.email.length) {
         setSession({
           email: cookie
         });
       }
     }
     getCookie();
-  }, [session.email]);
+  });
 
   const logOut = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
