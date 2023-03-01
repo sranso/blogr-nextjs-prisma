@@ -1,25 +1,19 @@
 import React, { MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 
 export type NavbarProps = {
   session: {
     email: string;
   };
+  logOut: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ session }) => {
+const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
   const router = useRouter();
 
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
-
-  const logOut = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    Cookies.remove("session");
-    router.push("/");
-  };
 
   let left = (
     <div className="left">

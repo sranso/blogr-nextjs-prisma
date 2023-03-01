@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode, useState, useEffect, MouseEvent } from "react";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 
@@ -21,10 +21,16 @@ const Layout: React.FC<Props> = (props) => {
     getCookie();
   }, [session.email]);
 
+  const logOut = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSession({ email: "" });
+    Cookies.remove("session");
+  };
+
   return (
     <>
       <div className="layout">
-        <Navbar session={session} />
+        <Navbar session={session} logOut={logOut} />
         {props.children}
       </div>
       <style jsx global>{`
