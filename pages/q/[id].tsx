@@ -1,37 +1,44 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import ReactMarkdown from "react-markdown";
-import { PostProps } from "../../components/Post";
+import Link from "next/link";
+import superjson from 'superjson';
+import { QuoteProps } from "../../components/Quote";
 import prisma from "../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = await prisma.post.findUnique({
+  const quote = await prisma.quote.findUnique({
     where: {
       id: String(params?.id),
     },
     include: {
-      author: {
-        select: { name: true },
+      quotee: {
+        select: { name: true, bio: true },
       },
+      user: {
+        select: { name: true },
+      }
     },
   });
+  const q = () => (superjson.serialize(quote).json as any);
   return {
-    props: post,
+    props: q(),
   };
 };
 
-const Post: React.FC<PostProps> = (props) => {
-  let title = props.title;
-  if (!props.published) {
-    title = `${title} (Draft)`;
-  }
+const Post: React.FC<QuoteProps> = (props) => {
+  const quotee = props.quotee;
+  const user = props.user;
 
   return (
     <div>
       <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+        <h2>{props.body}</h2>
+        <p>By {quotee.name}</p>
+        {quotee.bio?.length > 0 ? <p>Bio: {quotee.bio}</p> : <></>}
+        <p>Added by {user.name}</p>
+        {props.source !== null ? <p>
+        Read more <Link href={props.source}>here.</Link>
+      </p> : <></>}
       </div>
       <style jsx>{`
         .page {

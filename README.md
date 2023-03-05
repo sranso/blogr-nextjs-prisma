@@ -12,27 +12,15 @@ https://vercel.com/guides/nextjs-prisma-postgres
 
 - Database is postgres, hosted on supabase.com
 - prisma is ORM
+  - good Prisma docs: https://www.prisma.io/docs/concepts/components/prisma-migrate/mental-model
 - nextjs is framework
 - typescript is language
 
 # Todos
 
-## Add cookie for signed in users
-
-- Every time that visitor wants to do something, that cookie should be part of the request and you can use that username to look up the account, etc etc
-
-## Email validation upon sign up
-
-use this? https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/prisma-validator
+https://www.notion.so/Quotes-app-693c3b03a5204ccd904bb5f8cc24e9a9
 
 ## Decide what this is ;)
 
 A game? Place for people to add and share fav quotes?
 Poetry? Missed connections? Creative prompts made from fav quotes / poetry / any kind of post or submission from a user?
-
-## Add SWR
-
-https://swr.vercel.app/
-good ex here? https://github.com/vercel/next.js/tree/canary/examples/api-routes-rest/pages/user
-https://www.prisma.io/docs/concepts/overview/prisma-in-your-stack/rest
-https://nextjs.org/docs/api-routes/introduction

@@ -1,51 +1,55 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import Post, { PostProps } from "../components/Post";
+import superjson from 'superjson';
+import Quote, { QuoteProps } from "../components/Quote";
 import prisma from "../lib/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
+  const feed = await prisma.quote.findMany({
     include: {
-      author: {
-        select: { name: true },
+      quotee: {
+        select: { name: true, bio: true },
       },
+      user: {
+        select: { name: true, email: true },
+      }
     },
   });
+  const serialized = feed.map((f) => superjson.serialize(f).json);
   return {
-    props: { feed },
+    props: { feed: serialized },
     revalidate: 10,
   };
 };
 
 type Props = {
-  feed: PostProps[];
+  feed: QuoteProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Feed: React.FC<Props> = (props) => {
   return (
     <>
       <div className="page">
         <h1>Public Feed</h1>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
+          {props.feed.map((quote) => (
+            <div key={quote.id} className="quote">
+              <Quote quote={quote} />
             </div>
           ))}
         </main>
       </div>
       <style jsx>{`
-        .post {
+        .quote {
           background: white;
           transition: box-shadow 0.1s ease-in;
         }
 
-        .post:hover {
+        .quote:hover {
           box-shadow: 1px 1px 3px #aaa;
         }
 
-        .post + .post {
+        .quote + .quote {
           margin-top: 2rem;
         }
       `}</style>
@@ -53,4 +57,4 @@ const Blog: React.FC<Props> = (props) => {
   );
 };
 
-export default Blog;
+export default Feed;

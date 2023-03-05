@@ -3,46 +3,65 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const alice = await prisma.user.upsert({
-    where: { email: 'alice@prisma.io' },
+  const quoteeRilke = await prisma.quotee.upsert({
+    where: { name: 'Rainer Maria Rilke' },
     update: {},
     create: {
-      email: 'alice@prisma.io',
-      name: 'Alice',
-      posts: {
-        create: {
-          title: 'i love fish',
-          content: 'as animals not food',
-          published: true,
-        },
+      name: 'Rainer Maria Rilke',
+      bio: 'Austrian poet'
+    },
+  });
+  const quoteeDidion = await prisma.quotee.upsert({
+    where: { name: 'Joan Didion' },
+    update: {},
+    create: {
+      name: 'Joan Didion',
+    },
+  });
+
+  const userSarah = await prisma.user.upsert({
+    where: { email: 'sranso@gmail.com' },
+    update: {},
+    create: {
+      name: 'Sarah R',
+      email: 'sranso@gmail.com',
+      quotes: {
+        create: [
+          {
+            body: 'Let life happen to you. Believe me: life is in the right, always.',
+            source: null,
+            quoteeId: quoteeRilke.id,
+          },
+          {
+            body: 'I write entirely to find out what I\'m thinking, what I\'m looking at, what I see and what it means. What I want and what I fear.',
+            source: null,
+            quoteeId: quoteeDidion.id,
+          }
+        ],
       },
     },
   });
 
-  const bob = await prisma.user.upsert({
-    where: { email: 'bob@prisma.io' },
+
+  const userKiron = await prisma.user.upsert({
+    where: { email: 'kiron@gmail.com' },
     update: {},
     create: {
-      email: 'bob@prisma.io',
-      name: 'Bob',
-      posts: {
+      name: 'Kiron K',
+      email: 'kiron@gmail.com',
+      quotes: {
         create: [
           {
-            title: 'how neat',
-            content: 'all these things exist now',
-            published: true,
-          },
-          {
-            title: 'you mean it',
-            content: 'sure do',
-            published: true,
+            body: 'And now we welcome the new year. Full of things that have never been.',
+            source: null,
+            quoteeId: quoteeRilke.id,
           },
         ],
       },
     },
   });
 
-  console.log({ alice, bob })
+  console.log({ userSarah, userKiron });
 }
 
 main()
