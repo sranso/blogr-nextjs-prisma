@@ -1,17 +1,14 @@
-import React from "react";
-import { GetStaticProps } from "next";
-import superjson from "superjson";
-import Quote, { QuoteProps } from "../components/Quote";
-import prisma from "../lib/prisma";
+import React from 'react';
+import { GetStaticProps } from 'next';
+import superjson from 'superjson';
+import FeedQuote, { FeedQuoteProps } from '../components/Quote/Feed';
+import prisma from '../lib/prisma';
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({
     include: {
       quotee: {
         select: { name: true, bio: true },
-      },
-      user: {
-        select: { name: true, email: true },
       },
     },
   });
@@ -23,18 +20,18 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 type Props = {
-  feed: QuoteProps[];
+  feed: FeedQuoteProps[];
 };
 
 const Feed: React.FC<Props> = (props) => {
   return (
     <>
-      <div className="page">
+      <div className='page'>
         <h1>Public Feed</h1>
         <main>
           {props.feed.map((quote) => (
-            <div key={quote.id} className="quote">
-              <Quote quote={quote} />
+            <div key={quote.id} className='quote'>
+              <FeedQuote quote={quote} />
             </div>
           ))}
         </main>

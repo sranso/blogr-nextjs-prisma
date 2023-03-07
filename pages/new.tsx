@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import superjson from "superjson";
-import prisma from "../lib/prisma";
-import { QuoteeProps } from "../components/Quotee";
-import { QuoteProps } from "../components/Quote";
-import type { ResponseError } from "../interfaces";
-
-const isQuote = (data: QuoteProps | ResponseError): data is QuoteProps =>
-  (data as QuoteProps).id !== undefined;
+import React, { useState } from 'react';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import superjson from 'superjson';
+import prisma from '../lib/prisma';
+import { QuoteeProps } from '../components/Quotee';
+import type { ResponseError } from '../interfaces';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const quotees = await prisma.quotee.findMany();
@@ -32,15 +28,26 @@ export type FormData = {
   userEmail: string;
 };
 
+export type QuoteProps = {
+  id: string;
+  body: string;
+  source: string | null;
+  quoteeId: string;
+  userId: string;
+};
+
+const isQuote = (data: QuoteProps | ResponseError): data is QuoteProps =>
+  (data as QuoteProps).id !== undefined;
+
 const NewQuote: React.FC<Props> = ({ quotees }) => {
   const [quotee, setQuotee] = useState(quotees[0].name);
   const router = useRouter();
 
   const createQuote = async (formData: FormData) => {
-    const res = await fetch("/api/quotes/create", {
-      method: "POST",
+    const res = await fetch('/api/quotes/create', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     });
@@ -50,7 +57,7 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
       router.push(`/q/${data.id}`);
     }
     if (res.status === 405) {
-      console.error("error", data);
+      console.error('error', data);
     }
   };
 
@@ -62,11 +69,11 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
       source: { value: string | null };
     };
     const { quote, newQuotee, source } = target;
-    const formData = {
+    const formData: FormData = {
       quote: quote.value,
-      quotee: quotee === "new" ? newQuotee.value : quotee,
+      quotee: quotee === 'new' ? newQuotee.value : quotee,
       source: source?.value?.length ? source.value : null,
-      userEmail: "sranso@gmail.com",
+      userEmail: 'sranso@gmail.com',
     };
 
     createQuote(formData);
@@ -79,14 +86,14 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
 
         <label>
           Quote* <br />
-          <textarea autoFocus id="quote" name="quote" rows={4} />
+          <textarea autoFocus id='quote' name='quote' rows={4} />
         </label>
 
         <label>
           Quotee* <br />
           <select
-            id="quotee"
-            name="quotee"
+            id='quotee'
+            name='quotee'
             value={quotee}
             onChange={(e) => setQuotee(e.target.value)}
           >
@@ -95,18 +102,18 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
                 {q.name}
               </option>
             ))}
-            <option value="new">Create new</option>
+            <option value='new'>Create new</option>
           </select>
         </label>
 
-        {quotee === "new" ? (
+        {quotee === 'new' ? (
           <label>
             Add new quotee*
             <input
-              id="newQuotee"
-              name="newQuotee"
-              type="text"
-              placeholder="Full name"
+              id='newQuotee'
+              name='newQuotee'
+              type='text'
+              placeholder='Full name'
             />
           </label>
         ) : (
@@ -117,14 +124,14 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
           Source
           <br />
           <input
-            id="source"
-            name="source"
-            type="text"
-            placeholder="eg https://www.goodreads.com/quotes/22534..."
+            id='source'
+            name='source'
+            type='text'
+            placeholder='eg https://www.goodreads.com/quotes/22534...'
           />
         </label>
 
-        <button type="submit" value="Submit">
+        <button type='submit' value='Submit'>
           Submit
         </button>
       </form>

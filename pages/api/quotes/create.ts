@@ -1,8 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import type { ResponseError } from "../../../interfaces";
-import type { QuoteProps } from "../../../components/Quote";
-import prisma from "../../../lib/prisma";
-import { FormData } from "../../../pages/new";
+import { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../../lib/prisma';
+import type { ResponseError } from '../../../interfaces';
+import type { FormData, QuoteProps } from '../../../pages/new';
 
 const createQuote = async (body: FormData) => {
   const user = await prisma.user.findUnique({
@@ -30,24 +29,21 @@ const createQuote = async (body: FormData) => {
   return quote;
 };
 
-const quoteHandler = async (
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<QuoteProps | ResponseError>
 ) => {
-  if (req.method !== "POST") {
-    return res.status(400).json({ message: "Wrong method." });
+  if (req.method !== 'POST') {
+    return res.status(400).json({ message: 'Wrong method.' });
   }
   createQuote(req.body)
     .then((quote) => {
       return res.status(200).json(quote);
     })
     .catch((error) => {
-      console.log("error:", error.code);
-      if (error.code === "P2002") {
-        return res.status(409).json({ message: "Quote already exists." });
-      }
-      return res.status(500).json({ message: "Internal error." });
+      console.log('error:', error.code);
+      return res.status(500).json({ message: 'Internal error.' });
     });
 };
 
-export default quoteHandler;
+export default handler;
