@@ -74,9 +74,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
   } else {
     left = (
       <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}></Link>
-        <Link href="/drafts" data-active={isActive("/drafts")}>
-          My drafts
+        <Link href="/" className="bold" data-active={isActive("/")}>Home</Link>
+        <Link href="/new" data-active={isActive("/new")}>
+          Add quote
         </Link>
         <style jsx>{`
           .bold {

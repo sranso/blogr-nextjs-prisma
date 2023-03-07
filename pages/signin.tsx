@@ -3,10 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import type { User, ResponseError } from "../interfaces";
-
-const isResponseError = (data: User | ResponseError): data is ResponseError => {
-  return (data as ResponseError).message !== undefined;
-};
+import { isResponseError } from "../interfaces";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +20,6 @@ const SignIn: React.FC = () => {
     });
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
-      console.log("user signed in", data);
       Cookies.set("session", email);
       router.push("/");
     }

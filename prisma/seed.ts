@@ -18,6 +18,13 @@ async function main() {
       name: 'Joan Didion',
     },
   });
+  const quoteeUnknown = await prisma.quotee.upsert({
+    where: { name: 'Unknown' },
+    update: {},
+    create: {
+      name: 'Unknown',
+    },
+  });
 
   const userSarah = await prisma.user.upsert({
     where: { email: 'sranso@gmail.com' },

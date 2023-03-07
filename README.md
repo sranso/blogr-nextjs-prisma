@@ -4,9 +4,13 @@ This is the starter project for the fullstack tutorial with Next.js and Prisma. 
 
 https://vercel.com/guides/nextjs-prisma-postgres
 
-## To run
+## To get started
 
-`npm run dev`
+```
+npm i
+prisma migrate reset # resets and seeds db
+npm run dev
+```
 
 ## Tools and services
 

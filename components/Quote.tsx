@@ -5,22 +5,23 @@ export type QuoteProps = {
   id: string;
   body: string;
   source: string | null;
-  quotee: {
+  quoteeId: string,
+  userId: string,
+  quotee?: {
     name: string;
     bio: string | null;
   };
-  user: {
+  user?: {
     name: string;
     email: string;
   };
 };
 
 const Quote: React.FC<{ quote: QuoteProps }> = ({ quote }) => {
-  const quotee = quote.quotee;
   return (
     <div onClick={() => Router.push("/q/[id]", `/q/${quote.id}`)}>
       <h2>{quote.body}</h2>
-      <small>By {quotee.name}</small>
+      <small>By {quote.quotee?.name}</small>
       <style jsx>{`
         div {
           color: inherit;

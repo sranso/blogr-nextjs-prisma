@@ -25,20 +25,17 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-const Post: React.FC<QuoteProps> = (props) => {
-  const quotee = props.quotee;
-  const user = props.user;
-
+const Quote: React.FC<QuoteProps> = ({ body, quotee, user, source }) => {
   return (
-    <div>
+    <>
       <div>
-        <h2>{props.body}</h2>
+        <h2>{body}</h2>
         <p>By {quotee.name}</p>
         {quotee.bio?.length > 0 ? <p>Bio: {quotee.bio}</p> : <></>}
         <p>Added by {user.name}</p>
-        {props.source !== null ? <p>
-        Read more <Link href={props.source}>here.</Link>
-      </p> : <></>}
+        {source === null ? <></> : <p>
+          Read more <Link href={source}>here.</Link>
+        </p>}
       </div>
       <style jsx>{`
         .page {
@@ -61,8 +58,8 @@ const Post: React.FC<QuoteProps> = (props) => {
           margin-left: 1rem;
         }
       `}</style>
-    </div>
+    </>
   );
 };
 
-export default Post;
+export default Quote;
