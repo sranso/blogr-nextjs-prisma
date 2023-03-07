@@ -37,7 +37,7 @@ const SignUp: React.FC = () => {
   };
 
   const onFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let value: typeof user[keyof typeof user] = event.target.value;
+    let value: (typeof user)[keyof typeof user] = event.target.value;
     setUser({ ...user, [event.target.id]: value });
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import superjson from 'superjson';
+import superjson from "superjson";
 import Quote, { QuoteProps } from "../components/Quote";
 import prisma from "../lib/prisma";
 
@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps = async () => {
       },
       user: {
         select: { name: true, email: true },
-      }
+      },
     },
   });
   const serialized = feed.map((f) => superjson.serialize(f).json);

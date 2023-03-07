@@ -5,8 +5,8 @@ export type QuoteProps = {
   id: string;
   body: string;
   source: string | null;
-  quoteeId: string,
-  userId: string,
+  quoteeId: string;
+  userId: string;
   quotee?: {
     name: string;
     bio: string | null;

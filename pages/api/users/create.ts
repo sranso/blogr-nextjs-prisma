@@ -2,10 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import type { User, ResponseError } from "../../../interfaces";
 import prisma from "../../../lib/prisma";
 
-const createUser = async (body: {
-  email: string,
-  name: string,
-}) => {
+const createUser = async (body: { email: string; name: string }) => {
   const user = await prisma.user.create({
     data: {
       email: String(body.email),

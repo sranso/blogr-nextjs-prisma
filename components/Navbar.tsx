@@ -17,7 +17,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
 
   let left = (
     <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}>Home</Link>
+      <Link href="/" className="bold" data-active={isActive("/")}>
+        Home
+      </Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -74,7 +76,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
   } else {
     left = (
       <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}>Home</Link>
+        <Link href="/" className="bold" data-active={isActive("/")}>
+          Home
+        </Link>
         <Link href="/new" data-active={isActive("/new")}>
           Add quote
         </Link>
@@ -101,13 +105,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
     );
     right = (
       <div className="right">
-        <p>
-          ({session.email})
-        </p>
+        <p>({session.email})</p>
         <button onClick={() => console.log("new post")}>New post</button>
-        <button onClick={logOut}>
-          Log out
-        </button>
+        <button onClick={logOut}>Log out</button>
         <style jsx>{`
           a {
             text-decoration: none;

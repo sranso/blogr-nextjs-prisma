@@ -12,6 +12,4 @@ export type ResponseError = {
 
 export const isResponseError = (
   data: any | ResponseError
-): data is ResponseError => (
-  (data as ResponseError).message !== undefined
-);
+): data is ResponseError => (data as ResponseError).message !== undefined;

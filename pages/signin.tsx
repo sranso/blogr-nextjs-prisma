@@ -12,11 +12,11 @@ const SignIn: React.FC = () => {
 
   const signInUser = async () => {
     const res = await fetch(`/api/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
-      })
+      }),
     });
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
@@ -42,26 +42,26 @@ const SignIn: React.FC = () => {
   return (
     <>
       <form onSubmit={onSubmit}>
-      <p>Sign in</p>
-      <label>
-        Email:
-        <input
-          autoFocus
-          type="text"
-          id="email"
-          name="email"
-          onChange={onFieldChange}
-        />
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
-    {error.length ? <p className="error">{error}</p> : null}
-    <Link href="/signup">Sign up instead</Link>
-    <style jsx>{`
-      .error {
-        color: red;
-      }
-    `}</style>
+        <p>Sign in</p>
+        <label>
+          Email:
+          <input
+            autoFocus
+            type="text"
+            id="email"
+            name="email"
+            onChange={onFieldChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      {error.length ? <p className="error">{error}</p> : null}
+      <Link href="/signup">Sign up instead</Link>
+      <style jsx>{`
+        .error {
+          color: red;
+        }
+      `}</style>
     </>
   );
 };

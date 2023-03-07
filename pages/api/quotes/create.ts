@@ -8,7 +8,7 @@ const createQuote = async (body: FormData) => {
   const user = await prisma.user.findUnique({
     where: {
       email: String(body.userEmail),
-    }
+    },
   });
   const quotee = await prisma.quotee.upsert({
     where: {
@@ -44,9 +44,7 @@ const quoteHandler = async (
     .catch((error) => {
       console.log("error:", error.code);
       if (error.code === "P2002") {
-        return res
-          .status(409)
-          .json({ message: "Quote already exists." });
+        return res.status(409).json({ message: "Quote already exists." });
       }
       return res.status(500).json({ message: "Internal error." });
     });

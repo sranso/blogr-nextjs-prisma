@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import superjson from 'superjson';
+import superjson from "superjson";
 import { QuoteProps } from "../../components/Quote";
 import prisma from "../../lib/prisma";
 
@@ -16,10 +16,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
       user: {
         select: { name: true },
-      }
+      },
     },
   });
-  const q = () => (superjson.serialize(quote).json as any);
+  const q = () => superjson.serialize(quote).json as any;
   return {
     props: q(),
   };
@@ -33,9 +33,13 @@ const Quote: React.FC<QuoteProps> = ({ body, quotee, user, source }) => {
         <p>By {quotee.name}</p>
         {quotee.bio?.length > 0 ? <p>Bio: {quotee.bio}</p> : <></>}
         <p>Added by {user.name}</p>
-        {source === null ? <></> : <p>
-          Read more <Link href={source}>here.</Link>
-        </p>}
+        {source === null ? (
+          <></>
+        ) : (
+          <p>
+            Read more <Link href={source}>here.</Link>
+          </p>
+        )}
       </div>
       <style jsx>{`
         .page {

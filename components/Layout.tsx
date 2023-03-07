@@ -14,10 +14,10 @@ const Layout: React.FC<Props> = (props) => {
       const cookie = await Cookies.get("session");
       if (cookie && !session.email.length) {
         setSession({
-          email: cookie
+          email: cookie,
         });
       }
-    }
+    };
     getCookie();
   });
 
@@ -69,7 +69,7 @@ const Layout: React.FC<Props> = (props) => {
         }
       `}</style>
     </>
-  )
+  );
 };
 
 export default Layout;

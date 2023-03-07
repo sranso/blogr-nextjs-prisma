@@ -3,15 +3,12 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import superjson from "superjson";
 import prisma from "../lib/prisma";
-import { QuoteeProps  } from "../components/Quotee";
+import { QuoteeProps } from "../components/Quotee";
 import { QuoteProps } from "../components/Quote";
 import type { ResponseError } from "../interfaces";
 
-const isQuote = (
-  data: QuoteProps | ResponseError
-): data is QuoteProps => (
-  (data as QuoteProps).id !== undefined
-);
+const isQuote = (data: QuoteProps | ResponseError): data is QuoteProps =>
+  (data as QuoteProps).id !== undefined;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const quotees = await prisma.quotee.findMany();
@@ -40,8 +37,8 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
   const router = useRouter();
 
   const createQuote = async (formData: FormData) => {
-    const res = await fetch('/api/quotes/create', {
-      method: 'POST',
+    const res = await fetch("/api/quotes/create", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -69,7 +66,7 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
       quote: quote.value,
       quotee: quotee === "new" ? newQuotee.value : quotee,
       source: source?.value?.length ? source.value : null,
-      userEmail: 'sranso@gmail.com',
+      userEmail: "sranso@gmail.com",
     };
 
     createQuote(formData);
@@ -78,70 +75,74 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
   return (
     <>
       <form onSubmit={onSubmit}>
-      <p>Add new quote</p>
+        <p>Add new quote</p>
 
-      <label>
-        Quote* <br/>
-        <textarea
-          autoFocus
-          id="quote"
-          name="quote"
-          rows={4}
-        />
-      </label>
-
-      <label>
-        Quotee* <br/>
-        <select
-          id="quotee"
-          name="quotee"
-          value={quotee}
-          onChange={(e) => setQuotee(e.target.value)}
-        >
-          {quotees.map((q: QuoteeProps) => (
-            <option key={q.name} value={q.name}>{q.name}</option>
-          ))}
-          <option value="new">Create new</option>
-        </select>
-      </label>
-
-      {quotee === "new" ?
         <label>
-          Add new quotee*
+          Quote* <br />
+          <textarea autoFocus id="quote" name="quote" rows={4} />
+        </label>
+
+        <label>
+          Quotee* <br />
+          <select
+            id="quotee"
+            name="quotee"
+            value={quotee}
+            onChange={(e) => setQuotee(e.target.value)}
+          >
+            {quotees.map((q: QuoteeProps) => (
+              <option key={q.name} value={q.name}>
+                {q.name}
+              </option>
+            ))}
+            <option value="new">Create new</option>
+          </select>
+        </label>
+
+        {quotee === "new" ? (
+          <label>
+            Add new quotee*
+            <input
+              id="newQuotee"
+              name="newQuotee"
+              type="text"
+              placeholder="Full name"
+            />
+          </label>
+        ) : (
+          <></>
+        )}
+
+        <label>
+          Source
+          <br />
           <input
-            id="newQuotee"
-            name="newQuotee"
+            id="source"
+            name="source"
             type="text"
-            placeholder="Full name"
-          /></label>
-        : <></>
-      }
+            placeholder="eg https://www.goodreads.com/quotes/22534..."
+          />
+        </label>
 
-      <label>
-        Source<br/>
-        <input
-          id="source"
-          name="source"
-          type="text"
-          placeholder="eg https://www.goodreads.com/quotes/22534..."
-        />
-      </label>
+        <button type="submit" value="Submit">
+          Submit
+        </button>
+      </form>
 
-      <button type="submit" value="Submit">Submit</button>
-    </form>
-
-    <style jsx>{`
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-      label {
-        margin-bottom: 1.5rem;
-      }
-      textarea, input, select {
-        width: 100%;
-      }
-    `}</style>
+      <style jsx>{`
+        form {
+          display: flex;
+          flex-direction: column;
+        }
+        label {
+          margin-bottom: 1.5rem;
+        }
+        textarea,
+        input,
+        select {
+          width: 100%;
+        }
+      `}</style>
     </>
   );
 };
