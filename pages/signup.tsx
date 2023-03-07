@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import Cookies from 'js-cookie';
+import React, { ChangeEvent, FormEvent, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { SessionContext } from '../components/Layout';
 import type { User, ResponseError } from '../interfaces';
 
 const isResponseError = (data: User | ResponseError): data is ResponseError => {
@@ -14,6 +14,7 @@ const SignUp: React.FC = () => {
     email: '',
   });
   const [error, setError] = useState('');
+  const { signIn } = useContext(SessionContext);
   const router = useRouter();
 
   const signUpUser = async () => {
@@ -26,8 +27,7 @@ const SignUp: React.FC = () => {
     });
     const data: User | ResponseError = await res.json();
     if (res.status === 200) {
-      console.log('user created', data);
-      Cookies.set('session', user.email);
+      signIn(user.email);
       router.push('/');
     }
     if (res.status === 409 && isResponseError(data)) {

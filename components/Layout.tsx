@@ -1,38 +1,62 @@
-import React, { ReactNode, useState, useEffect, MouseEvent } from "react";
-import Cookies from "js-cookie";
-import Navbar from "./Navbar";
+import React, {
+  ReactNode,
+  useState,
+  useEffect,
+  MouseEvent,
+  createContext,
+} from 'react';
+import Cookies from 'js-cookie';
+import Navbar from './Navbar';
 
 type Props = {
   children: ReactNode;
 };
 
+export type SessionContextType = {
+  email: string;
+  signIn: (email: string) => void;
+  logOut: (e: MouseEvent<HTMLButtonElement>) => void;
+};
+
+export const SessionContext = createContext<SessionContextType>({
+  email: '',
+  signIn: null,
+  logOut: null,
+});
+
 const Layout: React.FC<Props> = (props) => {
-  const [session, setSession] = useState({ email: "" });
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const getCookie = async () => {
-      const cookie = await Cookies.get("session");
-      if (cookie && !session.email.length) {
-        setSession({
-          email: cookie,
-        });
+      const cookie = await Cookies.get('session');
+      if (cookie && !email.length) {
+        setEmail(cookie);
       }
     };
     getCookie();
-  });
+  }, [email]);
 
-  const logOut = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setSession({ email: "" });
-    Cookies.remove("session");
+  const signIn = (email: string) => {
+    setEmail(email);
+    console.log('setting email', email);
+    Cookies.set('session', email);
+  };
+
+  const logOut = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setEmail('');
+    Cookies.remove('session');
   };
 
   return (
     <>
-      <div className="layout">
-        <Navbar session={session} logOut={logOut} />
-        {props.children}
-      </div>
+      <SessionContext.Provider value={{ email, signIn, logOut }}>
+        <div className='layout'>
+          <Navbar />
+          {props.children}
+        </div>
+      </SessionContext.Provider>
       <style jsx global>{`
         html {
           box-sizing: border-box;
@@ -48,9 +72,9 @@ const Layout: React.FC<Props> = (props) => {
           margin: 0;
           padding: 0;
           font-size: 16px;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-            "Segoe UI Symbol";
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+            'Segoe UI Symbol';
           background: rgba(0, 0, 0, 0.05);
         }
 

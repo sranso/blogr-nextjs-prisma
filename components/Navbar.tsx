@@ -1,23 +1,18 @@
-import React, { MouseEvent } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import React, { MouseEvent, useContext } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { SessionContext } from './Layout';
 
-export type NavbarProps = {
-  session: {
-    email: string;
-  };
-  logOut: (event: MouseEvent<HTMLButtonElement>) => void;
-};
-
-const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
+const Navbar: React.FC = () => {
+  const { email, logOut } = useContext(SessionContext);
   const router = useRouter();
 
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
   let left = (
-    <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}>
+    <div className='left'>
+      <Link href='/' className='bold' data-active={isActive('/')}>
         Home
       </Link>
       <style jsx>{`
@@ -31,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
           display: inline-block;
         }
 
-        .left a[data-active="true"] {
+        .left a[data-active='true'] {
           color: gray;
         }
 
@@ -44,10 +39,10 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
 
   let right = null;
 
-  if (!session.email.length) {
+  if (!email.length) {
     right = (
-      <div className="right">
-        <Link href="/signin" data-active={isActive("/signin")}>
+      <div className='right'>
+        <Link href='/signin' data-active={isActive('/signin')}>
           sign up / in
         </Link>
         <style jsx>{`
@@ -75,12 +70,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
     );
   } else {
     left = (
-      <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}>
+      <div className='left'>
+        <Link href='/' className='bold' data-active={isActive('/')}>
           Home
-        </Link>
-        <Link href="/new" data-active={isActive("/new")}>
-          Add quote
         </Link>
         <style jsx>{`
           .bold {
@@ -93,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
             display: inline-block;
           }
 
-          .left a[data-active="true"] {
+          .left a[data-active='true'] {
             color: gray;
           }
 
@@ -104,9 +96,9 @@ const Navbar: React.FC<NavbarProps> = ({ session, logOut }) => {
       </div>
     );
     right = (
-      <div className="right">
-        <p>({session.email})</p>
-        <button onClick={() => console.log("new post")}>New post</button>
+      <div className='right'>
+        <p>({email})</p>
+        <button onClick={() => router.push('/new')}>New quote</button>
         <button onClick={logOut}>Log out</button>
         <style jsx>{`
           a {

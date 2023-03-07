@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import superjson from 'superjson';
 import prisma from '../lib/prisma';
+import { SessionContext } from '../components/Layout';
 import { QuoteeProps } from '../components/Quotee';
 import type { ResponseError } from '../interfaces';
 
@@ -41,6 +42,7 @@ const isQuote = (data: QuoteProps | ResponseError): data is QuoteProps =>
 
 const NewQuote: React.FC<Props> = ({ quotees }) => {
   const [quotee, setQuotee] = useState(quotees[0].name);
+  const { email } = useContext(SessionContext);
   const router = useRouter();
 
   const createQuote = async (formData: FormData) => {
@@ -73,7 +75,7 @@ const NewQuote: React.FC<Props> = ({ quotees }) => {
       quote: quote.value,
       quotee: quotee === 'new' ? newQuotee.value : quotee,
       source: source?.value?.length ? source.value : null,
-      userEmail: 'sranso@gmail.com',
+      userEmail: email,
     };
 
     createQuote(formData);
