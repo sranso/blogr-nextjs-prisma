@@ -8,7 +8,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({
     include: {
       quotee: {
-        select: { name: true, bio: true },
+        select: { name: true, bio: true, id: true },
       },
     },
   });

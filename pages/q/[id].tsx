@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
     include: {
       quotee: {
-        select: { name: true, bio: true },
+        select: { id: true, name: true, bio: true },
       },
       user: {
         select: { name: true },
@@ -25,8 +25,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-const Quote: React.FC<FullQuoteProps> = (props) => {
-  return <FullQuote quote={props} />;
+const Quote: React.FC<FullQuoteProps> = (quote) => {
+  return <FullQuote quote={quote} />;
 };
 
 export default Quote;

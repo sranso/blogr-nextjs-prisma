@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import superjson from 'superjson';
 import prisma from '../lib/prisma';
 import { SessionContext } from '../components/Layout';
-import { QuoteeProps } from '../components/Quotee';
+import type { QuoteeProps } from './quotees/[id]';
 import type { ResponseError } from '../interfaces';
 
 export const getServerSideProps: GetServerSideProps = async () => {
