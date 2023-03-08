@@ -6,7 +6,6 @@ export type FeedQuoteProps = {
   id: string;
   body: string;
   source: string | null;
-  quoteeId: string;
   userId: string;
   quotee: {
     id: string;
@@ -21,7 +20,7 @@ const FeedQuote: React.FC<{ quote: FeedQuoteProps }> = ({ quote }) => {
     <div onClick={() => Router.push('/q/[id]', `/q/${quote.id}`)}>
       <h2>"{quote.body}"</h2>
       <small>
-        By <Link href={`/quotee/${quotee.id}`}>{quotee.name}</Link>
+        By <Link href={`/quotees/${quotee.id}`}>{quotee.name}</Link>
       </small>
       <style jsx>{`
         div {

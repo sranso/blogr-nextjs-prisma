@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         select: { id: true, name: true, bio: true },
       },
       user: {
-        select: { name: true },
+        select: { id: true, name: true },
       },
     },
   });

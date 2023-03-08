@@ -27,7 +27,7 @@ const Feed: React.FC<Props> = (props) => {
   return (
     <>
       <div className='page'>
-        <h1>Public Feed</h1>
+        <h1>Quotes</h1>
         <main>
           {props.feed.map((quote) => (
             <div key={quote.id} className='quote'>

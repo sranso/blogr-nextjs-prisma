@@ -13,6 +13,7 @@ export type FullQuoteProps = {
     bio: string | null;
   };
   user?: {
+    id: string;
     name: string;
   };
 };
@@ -27,7 +28,9 @@ const FullQuote: React.FC<{ quote: FullQuoteProps }> = ({ quote }) => {
           By <Link href={`/quotees/${quotee.id}`}>{quotee.name}</Link>
         </p>
         {quotee.bio?.length > 0 ? <p>Bio: {quotee.bio}</p> : <></>}
-        <p>Added by {user.name}</p>
+        <p>
+          Added by <Link href={`/users/${user.id}`}>{user.name}</Link>
+        </p>
         {source === null ? (
           <></>
         ) : (

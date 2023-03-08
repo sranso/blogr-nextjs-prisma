@@ -39,7 +39,6 @@ const Layout: React.FC<Props> = (props) => {
 
   const signIn = (email: string) => {
     setEmail(email);
-    console.log('setting email', email);
     Cookies.set('session', email);
   };
 
