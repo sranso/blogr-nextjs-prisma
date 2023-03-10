@@ -2,6 +2,7 @@ import React, { MouseEvent, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SessionContext } from './Layout';
+import styles from '../styles/Navbar.module.css';
 
 const Navbar: React.FC = () => {
   const { email, logOut } = useContext(SessionContext);
@@ -11,29 +12,10 @@ const Navbar: React.FC = () => {
     router.pathname === pathname;
 
   let left = (
-    <div className='left'>
-      <Link href='/' className='bold' data-active={isActive('/')}>
+    <div className={styles.left}>
+      <Link href='/' className={styles.bold} data-active={isActive('/')}>
         Home
       </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-        }
-
-        .left a[data-active='true'] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
     </div>
   );
 
@@ -41,111 +23,35 @@ const Navbar: React.FC = () => {
 
   if (!email.length) {
     right = (
-      <div className='right'>
+      <div className={styles.right}>
         <Link href='/signin' data-active={isActive('/signin')}>
           sign up / in
         </Link>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style>
       </div>
     );
   } else {
     left = (
-      <div className='left'>
-        <Link href='/' className='bold' data-active={isActive('/')}>
+      <div className={styles.left}>
+        <Link href='/' className={styles.bold} data-active={isActive('/')}>
           Home
         </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active='true'] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
       </div>
     );
     right = (
-      <div className='right'>
+      <div className={styles.right}>
         <p>({email})</p>
-        <button onClick={() => router.push('/new')}>New quote</button>
+        <Link href='/new' data-active={isActive('/new')}>
+          New quote
+        </Link>
         <button onClick={logOut}>Log out</button>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <nav>
+    <nav className={styles.nav}>
       {left}
       {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
     </nav>
   );
 };

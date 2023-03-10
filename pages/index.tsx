@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import superjson from 'superjson';
 import FeedQuote, { FeedQuoteProps } from '../components/Quote/Feed';
 import prisma from '../lib/prisma';
+import styles from '../styles/Feed.module.css';
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({

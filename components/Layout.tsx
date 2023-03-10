@@ -50,45 +50,22 @@ const Layout: React.FC<Props> = (props) => {
 
   return (
     <>
-      <SessionContext.Provider value={{ email, signIn, logOut }}>
-        <div className='layout'>
-          <Navbar />
-          {props.children}
-        </div>
-      </SessionContext.Provider>
-      <style jsx global>{`
-        html {
-          box-sizing: border-box;
-        }
-
-        *,
-        *:before,
-        *:after {
-          box-sizing: inherit;
-        }
-
-        body {
-          margin: 0;
-          padding: 0;
-          font-size: 16px;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-            'Segoe UI Symbol';
-          background: rgba(0, 0, 0, 0.05);
-        }
-
-        input,
-        textarea {
-          font-size: 16px;
-        }
-
-        button {
-          cursor: pointer;
-        }
-      `}</style>
+      <div className='layout'>
+        <SessionContext.Provider value={{ email, signIn, logOut }}>
+          <link rel='stylesheet' href='https://use.typekit.net/wws8ddz.css' />
+          <div className='layout'>
+            <Navbar />
+            {props.children}
+          </div>
+        </SessionContext.Provider>
+        <footer>Thanks for visitng.</footer>
+      </div>
       <style jsx>{`
         .layout {
           padding: 0 2rem;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
         }
       `}</style>
     </>

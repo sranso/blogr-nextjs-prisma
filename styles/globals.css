@@ -1,0 +1,61 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+#__next {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 200vh;
+  font-size: 16px;
+  font-family: kepler-std, serif;
+  font-weight: 400;
+  font-style: normal;
+  background: hsla(57, 55%, 83%, 1);
+
+  background: linear-gradient(
+    135deg,
+    hsla(57, 55%, 83%, 1) 0%,
+    hsla(192, 17%, 94%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    135deg,
+    hsla(57, 55%, 83%, 1) 0%,
+    hsla(192, 17%, 94%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    135deg,
+    hsla(57, 55%, 83%, 1) 0%,
+    hsla(192, 17%, 94%, 1) 100%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#eceabd", endColorstr="#eef2f3", GradientType=1 );
+}
+
+h1,
+h2,
+h3 {
+  font-family: kepler-std-display, serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+input,
+textarea {
+  font-size: 16px;
+}
+
+button {
+  cursor: pointer;
+}
